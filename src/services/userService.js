@@ -6,7 +6,7 @@ export const signUpService = async (data) => {
         const newUser = await userRepository.create(data)
         return newUser
     } catch (error) {
-        if (error.name === 'ValidationErrors') {
+        if ( error.name === 'ValidatorError:') {
             throw new ValidationErrors({
                 error: error.errors
             }, error.message)
@@ -18,7 +18,7 @@ export const signUpService = async (data) => {
             }, 'A user with same email or username already exists')
         }
         
-        // console.log('user service error', error.cause.code)
+        console.log('user service error', error)
         // throw error; 
     }
 }
