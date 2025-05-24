@@ -9,10 +9,10 @@ import crudRepository from "./crudRepositories";
     return user;
 },
  getUserByName : async(name) => {
-    const user= await User.findOne({name})
+    const user= await User.findOne({name}).select('-password')
     return user
 }
 
-}
+} 
 
 export default userRepository
