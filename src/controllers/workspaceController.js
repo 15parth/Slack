@@ -6,8 +6,7 @@ import { customErrorResponse, internalServerError, successResponse } from "../ut
 export const createWorkspaceController = async (req, res)=>{
      try{
          const response = createWorkspaceService({
-             ...req.body,
-             owner:req.id
+             ...req.body
          });
 
          return res.status(StatusCodes.CREATED).json(successResponse(response,'Workspace created successfuly'))
