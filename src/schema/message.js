@@ -10,6 +10,21 @@ const messageSchema = new mongoose.Schema({
     },
     channelId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:Channel
+        ref:'Channel',
+        required:[true,'Channel Id is required']
+    },
+    senderId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:[true,'Sender Id is required']
+    },
+    workspaceId:{
+         type: mongoose.Schema.Types.ObjectId,
+         ref:'Workspace',
+         required:[true,'Workspace ID is required']
     }
-})
+}); 
+
+const Message= mongoose.model('Message',messageSchema)
+
+export default Message;
