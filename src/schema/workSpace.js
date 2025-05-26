@@ -26,7 +26,7 @@ const workSpaceSchema= new mongoose.Schema({
         type:String,
         required:[true,'Join code is required']
     },
-    channel:[
+    channels:[
         {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'Channel'
