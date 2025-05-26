@@ -23,7 +23,8 @@ export const signUp = async (req, res)=>{
 export const signIn = async (req, res)=>{
     try{
         const response = await signInService(req.body);
-        return response.status(StatusCodes.OK).json(successResponse(response,'User signed in successfully'))
+        console.log('this is response-->',response);
+        return res.status(StatusCodes.OK).json(successResponse(response,'User signed in successfully'))
     }
     catch(error){
         console.log("Sign In controller error", error)
