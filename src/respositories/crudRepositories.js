@@ -22,7 +22,7 @@ export default function crudRepository(schema){
             return updateDoc
         },
         deleteMany: async function (modelIds) {
-       const response = await Channel.deleteMany({
+       const response = await this.model.deleteMany({
          _id:{
             $in : modelIds
         }
