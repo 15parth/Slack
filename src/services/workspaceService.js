@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import {v4 as uuidv4} from 'uuid'
 
 import channelRepository from '../respositories/channelRepository.js';
+import userRepository from '../respositories/userRepositories.js';
 import workspaceRepository from '../respositories/workspaceRepository.js'
 import clientError from '../utils/Errors/clientErrors.js';
 import ValidationErrors from '../utils/Errors/validationError.js';
@@ -64,7 +65,7 @@ const isAdminOfWorkspace = (workspace , userId) =>{
    );
 }
 
-const isUserMemberOfWorkspace = (workspace, userId)=>{
+export const isUserMemberOfWorkspace = (workspace, userId)=>{
    return workspace.member.find(
       (member)=> member.memberId.toString()=== userId
    )
@@ -142,3 +143,42 @@ export const getWorspaceService = async (workspaceId , userId) =>{
            throw error;
        }
 }
+
+export const addMemberToWorkspaceService = async (workspaceId, memberId, role)=>{
+    try{
+          const workspace = await workspaceRepository.getById(workspaceId);
+          if(!workspace){
+            throw new clientError({
+               explanation: 'Invalid data sent from client',
+               message : 'Workspace not found',
+               statusCode : StatusCodes.NOT_FOUND
+            })
+          }
+      
+          const isValidUser = await userRepository.getById(memberId) 
+          if(!isValidUser){
+            throw new clientError({
+               explanation: 'Invalid data sent from client',
+               message : 'user not found',
+               statusCode : StatusCodes.NOT_FOUND
+            })
+          }
+          const isMember = isUserMemberOfWorkspace(workspace,memberId);
+           if(isMember){
+         throw new clientError({
+            explanation: 'User is already a member of the workspace',
+            message:'User is already a member of the workspace',
+            statusCode: StatusCodes.UNAUTHORIZED
+         });
+      }
+
+      const response = await workspaceRepository.addmemberToWorkspace(workspaceId,memberId, role);
+      return response;
+
+    }catch(error){
+      console.log('error from add member to workspace service',error);
+      throw error;
+    }
+}
+
+// export const addChannelToWorkspace =()=>{}
