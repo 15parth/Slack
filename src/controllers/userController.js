@@ -23,7 +23,7 @@ export const signUp = async (req, res)=>{
 export const signIn = async (req, res)=>{
     try{
         const response = await signInService(req.body);
-        console.log('this is response-->',response);
+        // console.log('this is response-->',response);
         return res.status(StatusCodes.OK).json(successResponse(response,'User signed in successfully'))
     }
     catch(error){
