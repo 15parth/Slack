@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes"
 
-import { createWorkspaceService, deleteWorkspaceServide, getWorkspaceUserIsMemberOfService, getWorspaceService, isUserMemberOfWorkspace } from "../services/workspaceService.js"
+import { addMemberToWorkpsaceService, createWorkspaceService, deleteWorkspaceServide, getWorkspaceUserIsMemberOfService, getWorspaceService, isUserMemberOfWorkspace } from "../services/workspaceService.js"
 import { customErrorResponse, internalServerError, successResponse } from "../utils/common/responseObjects.js"
 import clientError from "../utils/Errors/clientErrors.js"
 import workspaceRepository from "../respositories/workspaceRepository.js"
@@ -77,28 +77,28 @@ export const getWorkspaceController = async (req , res)=>{
 }  
 
 
-export const getWorkspaceByJoinCodeService = async(joinCode, userId)=>{
-    try{
-       const workspace = await workspaceRepository.getWorkspaceByJoinCode(joinCode)
-       if(!workspace){
-        throw new clientError({
-            explanation: 'invalid data sent from the client',
-            message: 'Workspace not found',
-            statusCode: StatusCodes.NOT_FOUND
-        })
-       }
-       
-       const isMember = isUserMemberOfWorkspace(workspace, userId);
-       if(!isMember){
-          throw new clientError({
-            explanation: 'User is not a member of the workspace',
-            message : 'User is not a member of the worspace',
-            statusCode: StatusCodes.UNAUTHORIZED
-          })
-       }
-
-    }catch(error){
-        console.log('get workspace by join code service error', error);
-        throw error;
+export const addMemberToWorkspaceController = async (req, res) => {
+  try {
+    const response = await addMemberToWorkspaceService(
+      req.params.workspaceId,
+      req.body.memberId,
+      req.body.role || 'member',
+      req.user
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        successResponse(response, 'Member added to workspace successfully')
+      );
+  } catch (error) {
+    console.log('add member to workspace controller error', error);
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
     }
-}
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+};
+
