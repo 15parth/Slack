@@ -6,7 +6,6 @@ import { customErrorResponse, internalServerError, successResponse } from "../ut
 export const signUp = async (req, res)=>{
     try{
        const user = await signUpService(req.body)
-    //    console.log('this is working')
        return res.status(StatusCodes.CREATED).json(successResponse(user , 'User created successfully'))
     }
     catch(error){
@@ -23,7 +22,6 @@ export const signUp = async (req, res)=>{
 export const signIn = async (req, res)=>{
     try{
         const response = await signInService(req.body);
-        // console.log('this is response-->',response);
         return res.status(StatusCodes.OK).json(successResponse(response,'User signed in successfully'))
     }
     catch(error){

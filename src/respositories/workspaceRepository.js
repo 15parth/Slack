@@ -5,7 +5,6 @@ import Workspace from '../schema/workSpace.js';
 import ClientError from '../utils/Errors/clientErrors.js'
 import channelRepository from './channelRepository.js';
 import  crudRepository from './crudRepositories.js'
-import clientError from '../utils/Errors/clientErrors.js';
  const workspaceRepository ={
     ...crudRepository(Workspace),
   
