@@ -1,9 +1,7 @@
 import { StatusCodes } from "http-status-codes"
 
-import { addMemberToWorkpsaceService, createWorkspaceService, deleteWorkspaceServide, getWorkspaceUserIsMemberOfService, getWorspaceService, isUserMemberOfWorkspace } from "../services/workspaceService.js"
+import { addMemberToWorkspaceService, createWorkspaceService, deleteWorkspaceServide, getWorkspaceUserIsMemberOfService, getWorspaceService } from "../services/workspaceService.js"
 import { customErrorResponse, internalServerError, successResponse } from "../utils/common/responseObjects.js"
-import clientError from "../utils/Errors/clientErrors.js"
-import workspaceRepository from "../respositories/workspaceRepository.js"
 
 export const createWorkspaceController = async (req, res)=>{
      try{
@@ -98,7 +96,7 @@ export const addMemberToWorkspaceController = async (req, res) => {
 
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json(internalErrorResponse(error));
+      .json(internalServerError(error));
   }
 };
 
