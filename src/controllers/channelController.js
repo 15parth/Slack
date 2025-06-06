@@ -5,7 +5,7 @@ import { customErrorResponse, internalServerError, successResponse } from "../ut
 
 export const getChannelByIdController = async ( req, res) =>{
     try {
-       const response = await getChannelById(req.params.channelId);
+       const response = await getChannelById(req.params.channelId,req.user);
 
        return res
               .status(StatusCodes.OK)

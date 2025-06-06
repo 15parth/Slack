@@ -7,7 +7,7 @@ import { isUserMemberOfWorkspace } from "./workspaceService.js";
 export const getChannelById= async (channelId,userId)=>{
     try{
         const channel = await channelRepository.getChannelWithWorkspaceDetails(channelId);
-        if(!channel){
+        if(!channel || !channel.workspaceId){
             throw new clientError({
                 message : 'Channel not found for the provided ID',
                 explanation:'Invalid data sent from client',
