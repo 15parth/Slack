@@ -13,7 +13,7 @@ import  crudRepository from './crudRepositories.js'
       .populate('members.memberId', 'username email avatar')
       .populate('channels')
 
- 
+     return workspace
   },
   getWorkspaceByName: async function(workspaceName){
     const workspace= await Workspace.findOne({name: workspaceName});

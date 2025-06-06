@@ -3,10 +3,9 @@ import {v4 as uuidv4} from 'uuid'
 
 import channelRepository from '../respositories/channelRepository.js';
 import userRepository from '../respositories/userRepositories.js';
-import workspaceRepository from '../respositories/workspaceRepository.js'
+import workspaceRepository from '../respositories/workspaceRepository.js';
 import clientError from '../utils/Errors/clientErrors.js';
 import ValidationErrors from '../utils/Errors/validationError.js';
-import workspaceRepository from '../respositories/workspaceRepository.js';
 
 export const createWorkspaceService = async (workspaceData)=>{
    try{
@@ -78,11 +77,11 @@ const isChannelAlreadyPartOfWorkspace = (workspace, channelName) => {
   );
 };
 
-const isMemberOfWorkspace = (workspace, channelName)=>{
-   return workspace.channels.find(
-      (channel)=> channel.name.toLowercase() === channelName.toLowercase()
-   )
-}
+// const isMemberOfWorkspace = (workspace, channelName)=>{
+//    return workspace.channels.find(
+//       (channel)=> channel.name.toLowercase() === channelName.toLowercase()
+//    )
+// }
 
 export const getWorkspaceUserIsMemberOfService = async (userId) =>{
    try {
@@ -221,7 +220,7 @@ export const getWorkspaceByJoinCodeService = async(joinCode, userId)=>{
 }
 
 
-export const addMemberToWorkpsaceService = async (workspaceID, memberId, role) =>{
+export const addMemberToWorkpsaceService = async (workspaceID, memberId, role, joinCode) =>{
    try{
        const workspace = await workspaceRepository.getWorkspaceByJoinCode(joinCode)
        if(!workspace){
@@ -241,7 +240,7 @@ export const addMemberToWorkpsaceService = async (workspaceID, memberId, role) =
             })
           }
 
-       const isMember = isUserMemberOfWorkspace(workspace, userId);
+       const isMember = isUserMemberOfWorkspace(workspace, memberId);
          if(!isMember){
          throw new clientError({
          explanation: 'User is already a member of the workspace',
@@ -251,6 +250,8 @@ export const addMemberToWorkpsaceService = async (workspaceID, memberId, role) =
       }
 
       const response = await workspaceRepository.addmemberToWorkspace(workspaceID, memberId, role)
+
+      return response
        
    }catch(error){
       console.log('addMemberToWorkpsaceService error',error)

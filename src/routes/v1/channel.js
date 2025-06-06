@@ -1,6 +1,7 @@
 import express from 'express'
-import { isAuthenticated } from '../../middleware/authMiddleware';
-import { getChannelByIdController } from '../../controllers/channelController';
+
+import { getChannelByIdController } from '../../controllers/channelController.js';
+import { isAuthenticated } from '../../middleware/authMiddleware.js';
 
 const router =  express.Router();
 
