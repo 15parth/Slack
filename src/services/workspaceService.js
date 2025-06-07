@@ -1,13 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
 import {v4 as uuidv4} from 'uuid'
 
+import { addEmailtoMailQueue } from '../producers/mailQueueProducers.js';
 import channelRepository from '../respositories/channelRepository.js';
 import userRepository from '../respositories/userRepositories.js';
 import workspaceRepository from '../respositories/workspaceRepository.js';
+import { workspaceJoinMail } from '../utils/common/mailObject.js';
 import clientError from '../utils/Errors/clientErrors.js';
 import ValidationErrors from '../utils/Errors/validationError.js';
-import { addEmailtoMailQueue } from '../producers/mailQueueProducers.js';
-import { workspaceJoinMail } from '../utils/common/mailObject.js';
 
 
 export const createWorkspaceService = async (workspaceData)=>{
