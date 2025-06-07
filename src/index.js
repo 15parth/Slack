@@ -5,6 +5,7 @@ import connectDB from './config/dbConfig.js'
 import mailer from './config/mailConfig.js'
 import { PORT } from './config/serverConfig.js'
 import apiRouter from './routes/apiRoutes.js'
+import './producers/mailQueueProducers.js'
 
 const app = express()
 
