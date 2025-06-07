@@ -6,6 +6,9 @@ import userRepository from '../respositories/userRepositories.js';
 import workspaceRepository from '../respositories/workspaceRepository.js';
 import clientError from '../utils/Errors/clientErrors.js';
 import ValidationErrors from '../utils/Errors/validationError.js';
+import { addEmailtoMailQueue } from '../producers/mailQueueProducers.js';
+import { workspaceJoinMail } from '../utils/common/mailObject.js';
+
 
 export const createWorkspaceService = async (workspaceData)=>{
    try{
@@ -185,6 +188,11 @@ export const addMemberToWorkspaceService = async (workspaceId, memberId, role)=>
       }
 
       const response = await workspaceRepository.addmemberToWorkspace(workspaceId,memberId, role);
+
+      addEmailtoMailQueue({...workspaceJoinMail(workspace),
+         to:isValidUser.email
+      })
+
       return response;
 
     }catch(error){
