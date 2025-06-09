@@ -1,6 +1,6 @@
 import express from 'express'
-import messageController from '../../controllers/messageController.js'
 
+import messageController from '../../controllers/messageController.js'
 import { isAuthenticated } from '../../middleware/authMiddleware.js';
 
 const router =  express.Router();

@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes"
-import { customErrorResponse, internalServerError, successResponse } from "../utils/common/responseObjects.js"
+
 import { getMessagesService } from "../services/messageService.js"
+import { customErrorResponse, internalServerError, successResponse } from "../utils/common/responseObjects.js"
 
 export const getMessages= async(req,res)=>{
      try{
