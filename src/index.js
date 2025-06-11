@@ -5,8 +5,12 @@ import connectDB from './config/dbConfig.js'
 import mailer from './config/mailConfig.js'
 import { PORT } from './config/serverConfig.js'
 import apiRouter from './routes/apiRoutes.js'
+import { Server } from 'socket.io'
+import {createServer} from 'node:http'
 
 const app = express()
+const server = createServer(app)
+const io = new Server(server)
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
