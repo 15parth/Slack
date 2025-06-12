@@ -25,6 +25,14 @@ app.get('/ping', (req, res) => {
 // console.log(PORT)
 io.on('connection', (socket)=>{
   console.log('a user connected', socket.id)
+  setTimeout(()=>{
+       socket.emit('message','this is a message from server')
+  },3000)
+
+  socket.on('messageFromServer',(data)=>{
+      console.log('this is the data', data);
+      // io.emit('messageFromServer',data)
+  })
 })
 
 server.listen(PORT, () => {
