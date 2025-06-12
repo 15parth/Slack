@@ -1,12 +1,12 @@
 import express from 'express'
+import {createServer} from 'http'
 import { StatusCodes } from 'http-status-codes'
+import { Server } from 'socket.io'
 
 import connectDB from './config/dbConfig.js'
-import mailer from './config/mailConfig.js'
+// import mailer from './config/mailConfig.js'
 import { PORT } from './config/serverConfig.js'
 import apiRouter from './routes/apiRoutes.js'
-import { Server } from 'socket.io'
-import {createServer} from 'node:http'
 
 const app = express()
 const server = createServer(app)
@@ -22,20 +22,23 @@ app.get('/ping', (req, res) => {
   return res.status(StatusCodes.OK).json({ message: 'pong' })
 })
 
-console.log(PORT)
+// console.log(PORT)
+io.on('connection', (socket)=>{
+  console.log('a user connected', socket.id)
+})
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`server is running on PORT ${PORT}`)
   connectDB();
 
-  const mailResponse = mailer.sendMail({
-    from :'bhardwajparth069@gmail.com',
-  to:'parthbhardwaj278@gmail.com',
-  subject:'Welcome to the mail',
-  text:'Welcome to the slack application'
-  });
+  // const mailResponse = mailer.sendMail({
+  //   from :'bhardwajparth069@gmail.com',
+  // to:'parthbhardwaj278@gmail.com',
+  // subject:'Welcome to the mail',
+  // text:'Welcome to the slack application'
+  // });
 
-  console.log(mailResponse)
+  // console.log(mailResponse)
   
 })
 
