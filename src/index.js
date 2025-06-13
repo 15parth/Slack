@@ -6,6 +6,7 @@ import { Server } from 'socket.io'
 import connectDB from './config/dbConfig.js'
 // import mailer from './config/mailConfig.js'
 import { PORT } from './config/serverConfig.js'
+import messageHandler from './controllers/messageSocketController.js'
 import apiRouter from './routes/apiRoutes.js'
 
 const app = express()
@@ -24,15 +25,7 @@ app.get('/ping', (req, res) => {
 
 // console.log(PORT)
 io.on('connection', (socket)=>{
-  console.log('a user connected', socket.id)
-  setTimeout(()=>{
-       socket.emit('message','this is a message from server')
-  },3000)
-
-  socket.on('messageFromServer',(data)=>{
-      console.log('this is the data', data);
-      // io.emit('messageFromServer',data)
-  })
+  messageHandler(io, socket)
 })
 
 server.listen(PORT, () => {
